@@ -20,13 +20,14 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth ->{
             auth.requestMatchers("/registration").permitAll();
-            auth.requestMatchers("/addProduct").permitAll();
-            auth.requestMatchers("/home").permitAll();
+
+            auth.requestMatchers("/home", "/product/**").hasAnyRole("SELLER", "BUYER");
+            auth.requestMatchers("/addProduct").hasRole("SELLER");
         }).httpBasic();
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests().and()
                 .cors().disable().authorizeHttpRequests().and()
-                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/home");
+                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/home", true);
         return httpSecurity.build();
     }
     // nu se tine minte , e o configurare care se ia de pe net
