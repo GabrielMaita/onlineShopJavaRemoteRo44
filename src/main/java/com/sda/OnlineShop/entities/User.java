@@ -1,6 +1,7 @@
 package com.sda.OnlineShop.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +19,8 @@ public class User {
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
     private ShoppingCart shoppingCart;
+
+    // cascade inlocuieste injectia la shoppingCart in RegistrationService
 }
