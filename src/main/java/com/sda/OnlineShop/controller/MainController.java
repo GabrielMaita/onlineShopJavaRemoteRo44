@@ -5,6 +5,7 @@ import com.sda.OnlineShop.dto.ProductDto;
 import com.sda.OnlineShop.dto.RegistrationDto;
 import com.sda.OnlineShop.dto.SelectedProductDto;
 import com.sda.OnlineShop.dto.ShoppingCartDto;
+import com.sda.OnlineShop.services.OrderService;
 import com.sda.OnlineShop.services.ProductService;
 import com.sda.OnlineShop.services.RegistrationService;
 import com.sda.OnlineShop.services.ShoppingCartService;
@@ -15,8 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -30,9 +29,11 @@ public class MainController {
     private RegistrationService registrationService;
     @Autowired
     private RegistrationDtoValidator registrationDtoValidator;
-
     @Autowired
     private ShoppingCartService shoppingCartService;
+
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/addProduct")
     public String addProductGet(Model model) {
@@ -82,11 +83,11 @@ public class MainController {
     public String viewProductPost(@ModelAttribute SelectedProductDto selectedProductDto,
                                   @PathVariable(value = "productId") String productId,
                                   @PathVariable(value = "name") String name,
-                                  Authentication authentication){
+                                  Authentication authentication) {
         System.out.println(selectedProductDto);
         System.out.println(authentication.getName());
 
-        shoppingCartService.addToCart(selectedProductDto,productId, authentication.getName());
+        shoppingCartService.addToCart(selectedProductDto, productId, authentication.getName());
         return "redirect:/product/" + name + "/" + productId;
     }
 
@@ -100,7 +101,7 @@ public class MainController {
     @PostMapping("/registration")
     public String viewRegistrationPost(@ModelAttribute RegistrationDto registrationDto, BindingResult bindingResult) {
         registrationDtoValidator.validate(registrationDto, bindingResult);
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "registration";
         }
         registrationService.addRegistration(registrationDto);
@@ -113,12 +114,18 @@ public class MainController {
     }
 
     @GetMapping("/checkout")
-    public String viewCheckoutGet(Authentication authentication,Model model){
+    public String viewCheckoutGet(Authentication authentication, Model model) {
         ShoppingCartDto shoppingCartDto = shoppingCartService.getShoppingCartDto(authentication.getName());
         model.addAttribute("shoppingCartDto", shoppingCartDto);
+        System.out.println(shoppingCartDto);
         return "checkout";
     }
+
     // cu model se trimite din backend in frontend !!!
+    @PostMapping("/confirmation")
+    public String launchOrderPost(Authentication authentication) {
+        orderService.launchOrder(authentication.getName());
+        return "confirmationPage";
 
-
+    }
 }
