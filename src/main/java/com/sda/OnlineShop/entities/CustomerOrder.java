@@ -3,23 +3,24 @@ package com.sda.OnlineShop.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class ShoppingCart {
-
+@ToString
+public class CustomerOrder {
     @Id
     @GeneratedValue
-    private Integer shoppingCartId;
+    private Integer Id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn
+    // Join C   se adauga pt generate foreign key
     private User user;
 
-    @OneToMany(mappedBy = "shoppingCart")
+    @OneToMany(mappedBy = "customerOrder")
     private List<SelectedProduct> selectedProducts;
-
 }

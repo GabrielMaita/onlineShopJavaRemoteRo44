@@ -5,6 +5,7 @@ import com.sda.OnlineShop.dto.ShoppingCartDto;
 import com.sda.OnlineShop.entities.Product;
 import com.sda.OnlineShop.entities.SelectedProduct;
 import com.sda.OnlineShop.entities.ShoppingCart;
+import com.sda.OnlineShop.mapper.ShoppingCartMapper;
 import com.sda.OnlineShop.repository.ProductRepository;
 import com.sda.OnlineShop.repository.SelectedProductRepository;
 import com.sda.OnlineShop.repository.ShoppingCartRepository;
@@ -22,11 +23,15 @@ public class ShoppingCartService {
     @Autowired
     private SelectedProductRepository selectedProductRepository;
 
+    @Autowired
+    private ShoppingCartMapper shoppingCartMapper;
+
+
     public void addToCart(SelectedProductDto selectedProductDto,
                           String productId, String authenticatedUserEmail) {
         Optional<Product> optionalProduct = productRepository.findById(Integer.valueOf(productId));
         Product product = optionalProduct.get();
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUserEmailAddress(authenticatedUserEmail);
+        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserEmailAddress(authenticatedUserEmail);
 
         SelectedProduct selectedProduct = buildProduct(selectedProductDto, product, shoppingCart);
         selectedProductRepository.save(selectedProduct);
@@ -34,14 +39,16 @@ public class ShoppingCartService {
 
     private SelectedProduct buildProduct(SelectedProductDto selectedProductDto, Product product, ShoppingCart shoppingCart) {
         SelectedProduct selectedProduct = new SelectedProduct();
-        selectedProduct.setQuantity(Integer.valueOf(selectedProductDto.getQuantity()));
         selectedProduct.setProduct(product);
+        selectedProduct.setQuantity(Integer.valueOf(selectedProductDto.getQuantity()));
         selectedProduct.setShoppingCart(shoppingCart);
         return selectedProduct;
     }
 
     public ShoppingCartDto getShoppingCartDto(String authenticatedUserEmail) {
-        return null;
+        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserEmailAddress(authenticatedUserEmail);
+        ShoppingCartDto shoppingCartDto = shoppingCartMapper.map(shoppingCart);
+        return shoppingCartDto;
         // TODO sa implementam maine 28Febr2023
     }
 }
