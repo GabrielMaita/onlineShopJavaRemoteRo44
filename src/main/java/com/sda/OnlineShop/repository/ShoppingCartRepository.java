@@ -7,4 +7,6 @@ public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Inte
 
 
     ShoppingCart findShoppingCartByUserEmailAddress(String authenticatedUserEmailAddress);
+
+    ShoppingCart findByUserEmailAddress(String authenticatedUserEmail);
 }

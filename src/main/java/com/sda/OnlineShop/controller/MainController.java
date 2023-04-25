@@ -1,6 +1,5 @@
 package com.sda.OnlineShop.controller;
 
-
 import com.sda.OnlineShop.dto.ProductDto;
 import com.sda.OnlineShop.dto.RegistrationDto;
 import com.sda.OnlineShop.dto.SelectedProductDto;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -32,15 +32,19 @@ public class MainController {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
+
+
+
     @Autowired
     private OrderService orderService;
+
 
     @GetMapping("/addProduct")
     public String addProductGet(Model model) {
         ProductDto productDto = new ProductDto();
         model.addAttribute("productDto", productDto);
-        //teoretic aici executam business logic
-        //dupa care introducem un nume "addProduct"
+
+        
         return "addProduct";
     }
 
@@ -51,7 +55,7 @@ public class MainController {
         productService.addProduct(productDto, productImage);
         System.out.println("S-a apelat functionalitatea de addProductPost");
         System.out.println(productDto);
-        return "addProduct";
+        return "redirect:/addProduct";
     }
 
     @GetMapping("/home")
@@ -60,6 +64,7 @@ public class MainController {
         model.addAttribute("productDtos", productDtos);
         return "home";
     }
+
 
     @GetMapping("/product/{name}/{productId}")
     public String viewProductGet(Model model,
@@ -74,16 +79,17 @@ public class MainController {
 
         SelectedProductDto selectedProductDto = new SelectedProductDto();
         model.addAttribute("selectedProductDto", selectedProductDto);
-        System.out.println("Am dat click pe produsul cu nume " + name + "id " + productId);
-
+        System.out.println("Am dat click pe produsul cu nume: " + name + " si id-ul: " + productId);
         return "viewProduct";
     }
+
 
     @PostMapping("/product/{name}/{productId}")
     public String viewProductPost(@ModelAttribute SelectedProductDto selectedProductDto,
                                   @PathVariable(value = "productId") String productId,
                                   @PathVariable(value = "name") String name,
                                   Authentication authentication) {
+
         System.out.println(selectedProductDto);
         System.out.println(authentication.getName());
 
@@ -125,7 +131,7 @@ public class MainController {
     @PostMapping("/confirmation")
     public String launchOrderPost(Authentication authentication) {
         orderService.launchOrder(authentication.getName());
-        return "confirmationPage";
+        return "confirmation";
 
     }
 }

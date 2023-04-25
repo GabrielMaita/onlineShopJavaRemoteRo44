@@ -21,17 +21,17 @@ public class OrderService {
     @Autowired
     private CustomerOrderRepository customerOrderRepository;
 
-    public void launchOrder(String authenticatedUserEmail){
-       ShoppingCart shoppingCart =  shoppingCartRepository.findShoppingCartByUserEmailAddress(authenticatedUserEmail);
-       User user = shoppingCart.getUser();
+    public void launchOrder(String authenticatedUserEmail) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUserEmailAddress(authenticatedUserEmail);
+        User user = shoppingCart.getUser();
 
         CustomerOrder customerOrder = new CustomerOrder();
         customerOrder.setUser(user);
-        // customerOrder.setSelectedProducts(shoppingCart.getSelectedProducts());
+        //customerOrder.setSelectedProducts(shoppingCart.getSelectedProductList());
         customerOrderRepository.save(customerOrder);
 
-        //scoatem selectedProduct din ShoppingCart
-        for (SelectedProduct selectedProduct : shoppingCart.getSelectedProducts()){
+        //scoatem selected products din shoppingCart
+        for (SelectedProduct selectedProduct : shoppingCart.getSelectedProductList()) {
             selectedProduct.setShoppingCart(null);
             selectedProduct.setCustomerOrder(customerOrder);
             selectedProductRepository.save(selectedProduct);

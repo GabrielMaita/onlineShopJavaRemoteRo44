@@ -24,8 +24,8 @@ public class ShoppingCartMapper {
 
         shoppingCartDto.setSelectedProductDtos(selectedProductDtoList);
         shoppingCartDto.setSubtotal(String.valueOf(subtotal));
-        shoppingCartDto.setShipping("50");
-        shoppingCartDto.setTotal(String.valueOf(subtotal + 50));
+        shoppingCartDto.setShipping("10");
+        shoppingCartDto.setTotal(String.valueOf(subtotal + 10));
         return  shoppingCartDto;
     }
 
@@ -40,7 +40,7 @@ public class ShoppingCartMapper {
 
     private List<SelectedProductDto> createSelectedProductDtoList(ShoppingCart shoppingCart) {
         List<SelectedProductDto> selectedProductDtoList = new ArrayList<>();
-        for(SelectedProduct selectedProduct : shoppingCart.getSelectedProducts()){
+        for(SelectedProduct selectedProduct : shoppingCart.getSelectedProductList()){
             SelectedProductDto selectedProductDto = selectedProductMapper.map(selectedProduct);
             selectedProductDtoList.add(selectedProductDto);
         }

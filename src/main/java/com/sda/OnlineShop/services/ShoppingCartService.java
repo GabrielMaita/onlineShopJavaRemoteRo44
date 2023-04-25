@@ -22,33 +22,33 @@ public class ShoppingCartService {
     private ShoppingCartRepository shoppingCartRepository;
     @Autowired
     private SelectedProductRepository selectedProductRepository;
-
     @Autowired
     private ShoppingCartMapper shoppingCartMapper;
 
 
+
+
     public void addToCart(SelectedProductDto selectedProductDto,
-                          String productId, String authenticatedUserEmail) {
+                          String productId,
+                          String authenticatedUserEmail) {
         Optional<Product> optionalProduct = productRepository.findById(Integer.valueOf(productId));
         Product product = optionalProduct.get();
-        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserEmailAddress(authenticatedUserEmail);
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUserEmailAddress(authenticatedUserEmail);
 
         SelectedProduct selectedProduct = buildProduct(selectedProductDto, product, shoppingCart);
         selectedProductRepository.save(selectedProduct);
     }
-
     private SelectedProduct buildProduct(SelectedProductDto selectedProductDto, Product product, ShoppingCart shoppingCart) {
         SelectedProduct selectedProduct = new SelectedProduct();
-        selectedProduct.setProduct(product);
         selectedProduct.setQuantity(Integer.valueOf(selectedProductDto.getQuantity()));
+        selectedProduct.setProduct(product);
         selectedProduct.setShoppingCart(shoppingCart);
         return selectedProduct;
     }
-
     public ShoppingCartDto getShoppingCartDto(String authenticatedUserEmail) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserEmailAddress(authenticatedUserEmail);
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUserEmailAddress(authenticatedUserEmail);
         ShoppingCartDto shoppingCartDto = shoppingCartMapper.map(shoppingCart);
         return shoppingCartDto;
-        // TODO sa implementam maine 28Febr2023
+
     }
 }

@@ -16,11 +16,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth ->{
             auth.requestMatchers("/registration").permitAll();
-
             auth.requestMatchers("/home", "/product/**").hasAnyRole("SELLER", "BUYER");
             auth.requestMatchers("/addProduct").hasRole("SELLER");
             auth.requestMatchers("/checkout").hasRole("BUYER");

@@ -20,6 +20,6 @@ public class ShoppingCart {
     private User user;
 
     @OneToMany(mappedBy = "shoppingCart")
-    private List<SelectedProduct> selectedProducts;
+    private List<SelectedProduct> selectedProductList;
 
 }

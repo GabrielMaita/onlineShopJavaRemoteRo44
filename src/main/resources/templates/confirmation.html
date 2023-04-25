@@ -2,49 +2,51 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
+  <title>Confirmation</title>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Aroma Shop - Home</title>
   <link rel="icon" href="/img/Fevicon.png" type="image/png">
+
   <link rel="stylesheet" href="/vendors/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="/vendors/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="/vendors/themify-icons/themify-icons.css">
-  <link rel="stylesheet" href="/vendors/nice-select/nice-select.css">
+  <link rel="stylesheet" href="/vendors/linericon/style.css">
   <link rel="stylesheet" href="/vendors/owl-carousel/owl.theme.default.min.css">
   <link rel="stylesheet" href="/vendors/owl-carousel/owl.carousel.min.css">
+  <link rel="stylesheet" href="/vendors/nice-select/nice-select.css">
+  <link rel="stylesheet" href="/vendors/nouislider/nouislider.min.css">
 
   <link rel="stylesheet" href="/css/style.css">
+
   <link rel="stylesheet" href="/css/custom.css">
 </head>
+
 <body>
+<div th:insert="~{fragments/menu :: menu}"></div>
 
 <!--================Order Details Area =================-->
 <section class="order_details section-margin--small">
   <div class="container">
     <p class="text-center billing-alert">Thank you. Your order has been received.</p>
-    <div class="row mb-5">
+    <div th:object="${customerOrderDto}" class="row mb-5">
       <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
         <div class="confirmation-card">
           <h3 class="billing-title">Order Info</h3>
           <table class="order-rable">
             <tr>
               <td>Order number</td>
-              <td>: 60235</td>
+              <td>: 001</td>
             </tr>
             <tr>
               <td>Date</td>
               <td>: Oct 03, 2017</td>
             </tr>
             <tr>
-              <td>Total</td>
+              <td>Total:</td>
               <td>: USD 2210</td>
             </tr>
             <tr>
               <td>Payment method</td>
-              <td>: Check payments</td>
+              <td>: Cash </td>
             </tr>
           </table>
         </div>
@@ -55,19 +57,19 @@
           <table class="order-rable">
             <tr>
               <td>Street</td>
-              <td>: 56/8 panthapath</td>
+              <td>: Calea Bucuresti 5</td>
             </tr>
             <tr>
               <td>City</td>
-              <td>: Dhaka</td>
+              <td>: Bucharest</td>
             </tr>
             <tr>
               <td>Country</td>
-              <td>: Bangladesh</td>
+              <td>: Romania</td>
             </tr>
             <tr>
               <td>Postcode</td>
-              <td>: 1205</td>
+              <td>: 1234</td>
             </tr>
           </table>
         </div>
@@ -78,19 +80,19 @@
           <table class="order-rable">
             <tr>
               <td>Street</td>
-              <td>: 56/8 panthapath</td>
+              <td>: Calea Bucuresti 5</td>
             </tr>
             <tr>
               <td>City</td>
-              <td>: Dhaka</td>
+              <td>: Bucharest</td>
             </tr>
             <tr>
               <td>Country</td>
-              <td>: Bangladesh</td>
+              <td>: Romania</td>
             </tr>
             <tr>
               <td>Postcode</td>
-              <td>: 1205</td>
+              <td>: 1234</td>
             </tr>
           </table>
         </div>
@@ -121,28 +123,6 @@
           </tr>
           <tr>
             <td>
-              <p>Pixelstore fresh Blackberry</p>
-            </td>
-            <td>
-              <h5>x 02</h5>
-            </td>
-            <td>
-              <p>$720.00</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Pixelstore fresh Blackberry</p>
-            </td>
-            <td>
-              <h5>x 02</h5>
-            </td>
-            <td>
-              <p>$720.00</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
               <h4>Subtotal</h4>
             </td>
             <td>
@@ -160,7 +140,7 @@
               <h5></h5>
             </td>
             <td>
-              <p>Flat rate: $50.00</p>
+              <p>Flat rate: $10.00</p>
             </td>
           </tr>
           <tr>
@@ -181,6 +161,7 @@
   </div>
 </section>
 <!--================End Order Details Area =================-->
+
 <script src="/vendors/jquery/jquery-3.2.1.min.js"></script>
 <script src="/vendors/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="/vendors/skrollr.min.js"></script>

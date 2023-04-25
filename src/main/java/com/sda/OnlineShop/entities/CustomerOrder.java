@@ -14,7 +14,7 @@ import java.util.List;
 public class CustomerOrder {
     @Id
     @GeneratedValue
-    private Integer Id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn
@@ -23,4 +23,5 @@ public class CustomerOrder {
 
     @OneToMany(mappedBy = "customerOrder")
     private List<SelectedProduct> selectedProducts;
+
 }
